@@ -1,0 +1,326 @@
+# trying to get smth as authorized user
+GET https://fsldev.herokuapp.com/user/me
+Accept: application/json
+Authorization: Bearer {{fsl_access_token}}
+
+#https://sun9-66.userapi.com/impg/zfvpPIZtpue2XwxXvJx-YRHTft6HXZOWQxYQgA/PaO0TY2TdrU.jpg?size=732x732&quality=96&proxy=1&sign=135feb8947d08185d0124ac43394ab4b&type=album
+
+###
+
+# deleting
+DELETE https://fsldev.herokuapp.com/post/-820617790
+Content-Type: application/json
+Authorization: Bearer {{fsl_access_token}}
+Refresh-Token: {{fsl_refresh_token}}
+
+
+###
+
+# authorizing
+POST https://fsldev.herokuapp.com/token/get
+Content-Type: application/json
+#Email: jkoz@inbox.ru
+#Password: bubun123
+
+{
+  "email": "jkoz@inbox.ru",
+  "password": "bubun123"
+}
+
+> {%
+var accessToken = response.headers.valueOf("Token")
+var refreshToken = response.headers.valueOf("Refresh-Token")
+client.assert(typeof accessToken !== "undefined", "No token returned");
+client.assert(typeof refreshToken !== "undefined", "No token returned");
+client.global.set("fsl_access_token", accessToken)
+client.global.set("fsl_refresh_token", refreshToken)
+client.log(refreshToken)
+client.log(accessToken)
+%}
+
+
+###
+
+POST https://fsldev.herokuapp.com/post/add
+Content-Type: application/json
+Authorization: Bearer {{fsl_access_token}}
+
+{
+  "title" : "Пример подачи заявки на конкурс",
+  "text" : "После публикации объявления в списке ваших демок уже должна находиться названная запись.\nИтоги конкурса подводятся 29 марта, как и награждение победителей.\nВсем участникам желаем удачи!",
+  "photoLink" : "https://res.cloudinary.com/dmq4aevks/image/upload/v1615823636/photo_2021-03-15_17-29-37_k9iufb.jpg"
+}
+
+###
+
+POST https://fsldev.herokuapp.com/post/add
+Content-Type: application/json
+Authorization: Bearer {{fsl_access_token}}
+
+{
+  "title": "Стартует конкурс демо-записей",
+  "text": "Прими участие в конкурсе демо-записей, и получи возможность выиграть публикацию в новостях и приз - мерч АГ.\nО том, как подать заявку, смотри в предыдущей новости.",
+  "photoLink": "https://res.cloudinary.com/dmq4aevks/image/upload/v1615822970/studio-microphone-with-headphones-live-production-picture-id635927978_v5f10i.jpg"
+}
+
+###
+
+GET http://localhost:8080/post/all
+Content-Type: application/json
+Authorization: Bearer {{fsl_access_token}}
+
+###
+{
+  "title": "Клип от FLESH",
+  "text": "FLESH анонсировал выход клипа на трек из нового альбома \"Эйфория\" уже 2 марта.",
+  "photoLink": "https://res.cloudinary.com/dmq4aevks/image/upload/v1614609580/1MNCRDxqwkE_rzmqzn.jpg"
+}
+###
+
+GET http://ec2-3-132-203-250.us-east-2.compute.amazonaws.com/post/all
+Host: ec2-3-132-203-250.us-east-2.compute.amazonaws.com
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Origin: https://freshsoundlife.web.app
+
+###
+
+# authorizing
+POST http://ec2-3-132-203-250.us-east-2.compute.amazonaws.com/token/get
+Content-Type: application/json
+#Email: jkoz@inbox.ru
+#Password: bubun123
+
+{
+  "email": "jkoz@inbox.ru",
+  "password": "bubun123"
+}
+
+> {%
+var accessToken = response.headers.valueOf("Token")
+var refreshToken = response.headers.valueOf("Refresh-Token")
+client.assert(typeof accessToken !== "undefined", "No token returned");
+client.assert(typeof refreshToken !== "undefined", "No token returned");
+client.global.set("fsl_access_token", accessToken)
+client.global.set("fsl_refresh_token", refreshToken)
+client.log(refreshToken)
+client.log(accessToken)
+%}
+
+###
+
+# authorizing
+POST http://localhost:8080/user/avatar-change
+Content-Type: application/json
+Authorization: Bearer {{fsl_access_token}}
+#Email: jkoz@inbox.ru
+#Password: bubun123
+
+{
+  "avatar": "https://res.cloudinary.com/dmq4aevks/image/upload/v1614080223/tema_akqau4.jpg"
+}
+
+
+###
+
+# authorizing
+POST https://fsldev.herokuapp.com/user/demo-add
+Content-Type: application/json
+Authorization: Bearer {{fsl_access_token}}
+#Email: jkoz@inbox.ru
+#Password: bubun123
+
+{
+  "audio": "https://res.cloudinary.com/dmq4aevks/video/upload/v1614530085/lsp_-_nomera__zaycev.net_d0ccm1.mp3"
+}
+
+###
+//{
+//  "avatar": "https://res.cloudinary.com/dmq4aevks/image/upload/v1613728123/me_kj9wzq.jpg"
+//}
+###
+
+
+###
+
+# authorizing
+POST http://localhost:8080/token/get
+Content-Type: application/json
+#Email: jkoz@inbox.ru
+#Password: bubun123
+
+{
+  "email": "jkoz@inbox.ru",
+  "password": "bubun123"
+}
+
+> {%
+var accessToken = response.headers.valueOf("Token")
+var refreshToken = response.headers.valueOf("Refresh-Token")
+client.assert(typeof accessToken !== "undefined", "No token returned");
+client.assert(typeof refreshToken !== "undefined", "No token returned");
+client.global.set("fsl_access_token", accessToken)
+client.global.set("fsl_refresh_token", refreshToken)
+client.log(refreshToken)
+client.log(accessToken)
+%}
+
+###
+
+# refreshing
+POST http://ec2-3-132-203-250.us-east-2.compute.amazonaws.com/token/refresh
+Content-Type: application/json
+Authorization: Bearer {{fsl_access_token}}
+Refresh-Token: {{fsl_refresh_token}}
+
+> {%
+var accessToken = response.headers.valueOf("Token")
+var refreshToken = response.headers.valueOf("Refresh-Token")
+client.assert(typeof accessToken !== "undefined", "No token returned");
+client.assert(typeof refreshToken !== "undefined", "No token returned");
+client.global.set("fsl_access_token", accessToken)
+client.global.set("fsl_refresh_token", refreshToken)
+client.log(refreshToken)
+client.log(accessToken)
+%}
+
+###
+
+# adding
+POST https://fsldev.herokuapp.com/user/add
+Content-Type: application/json
+
+{
+  "username": "Naxy",
+  "email": "esskeetiter@gmail.com",
+  "password": "xui"
+}
+
+###
+
+# deleting
+DELETE http://ec2-3-132-203-250.us-east-2.compute.amazonaws.com/user/-486013673
+Content-Type: application/json
+Authorization: Bearer {{fsl_access_token}}
+Refresh-Token: {{fsl_refresh_token}}
+###
+
+# deleting
+DELETE https://fsldev.herokuapp.com/post/1615823830285
+Content-Type: application/json
+Authorization: Bearer {{fsl_access_token}}
+Refresh-Token: {{fsl_refresh_token}}
+
+//{
+//  "username": "Soska",
+//  "email": "xui@inbox.ru",
+//  "password": "bubun",
+//  "role": "ADMIN"
+//}
+
+###
+
+#adding
+POST http://localhost:8080/user/add/admin
+Content-Type: application/json
+Authorization: Bearer {{fsl_access_token}}
+Refresh-Token: {{fsl_refresh_token}}
+
+{
+  "username": "Creator",
+  "email": "jkoz@inbox.ru",
+  "password": "bubun123",
+  "role": "ADMIN"
+}
+
+###
+
+# adding
+POST https://fsldev.herokuapp.com/anno/add
+Content-Type: application/json
+Authorization: Bearer {{fsl_access_token}}
+
+{
+  "title": "Гитарист в группу",
+  "text": "Группа существует 2 месяца, репетируем на ст. метро Площадь Восстания.\nИмеются все члены группы, кроме гитариста.\nПо вопросам сотрудничества писать на почту, указанную в профиле."
+}
+
+###
+
+#
+GET http://localhost:8080/anno/all
+Accept: application/json
+
+###
+
+#
+GET http://localhost:8080/post/all
+Accept: application/json
+Authorization: Bearer {{fsl_access_token}}
+
+###
+
+#
+GET http://localhost:8080/anno/search?query=продюсер
+Accept: application/json
+
+###
+
+#
+DELETE http://localhost:8080/anno/all
+Accept: application/json
+Authorization: Bearer {{fsl_access_token}}
+
+###
+
+
+GET http://localhost:8080/user/confirm/144522623-1601759220-1622496278
+
+> {%
+var accessToken = response.headers.valueOf("Token")
+var refreshToken = response.headers.valueOf("Refresh-Token")
+client.assert(typeof accessToken !== "undefined", "No token returned");
+client.assert(typeof refreshToken !== "undefined", "No token returned");
+client.global.set("fsl_access_token", accessToken)
+client.global.set("fsl_refresh_token", refreshToken)
+client.log(refreshToken)
+client.log(accessToken)
+%}
+
+###
+
+
+
+
+
+
+
+
+
+
+
+GET http://localhost:9200/posts/_search
+Accept: application/json
+
+###
+GET http://localhost:9200/posts/_search
+Accept: application/json
+
+###
+DELETE http://localhost:9200/posts/_doc/1834886969
+Accept: application/json
+
+###
+POST http://localhost:9200/users/_doc
+Content-Type: application/json
+
+{
+  "username": null,
+  "email": null,
+  "password": null,
+  "status": "inactive",
+  "id": "1",
+  "announcements": []
+}

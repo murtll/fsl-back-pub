@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FSL API docs</title>
+</head>
+<body>
+<center>
+    <h1>Documentation for API</h1>
+    <a href="https://fsldev.herokuapp.com">fsldev.herokuapp.com</a>
+    <br>
+    <br>
+    <h3>Mappings for actions with users (starts with <a href="https://fsldev.herokuapp.com/user">/user</a>)</h3>
+</center>
+<ul>
+    <li>
+        /{id} - GET - get information about user with id {id}
+    </li>
+    <li>
+        /all - GET - get information about all users
+    </li>
+    <li>
+        /add - POST - add new user<br>
+        gets JSON object like this -
+        <br>{
+        <br>"username": "[username]",
+        <br>"email": "[email]",
+        <br>"password": "[password]"
+        <br>}
+        <br>sends confirmation email to email address specified in request
+        <br>returns HTTP 200 OK if all was good or HTTP 400 BadRequest if smth went wrong
+    </li>
+    <li>
+        /confirm/{key} - GET - confirms that this key really was taken
+        if it was and was not used yet, user with this key becomes active user
+    </li>
+    <li>
+        /me - GET - gives to client information about this user based on his token (client must be authorized)
+    </li>
+</ul>
+
+<center>
+    <h3>Mappings for actions with tokens (starts with <a href="https://fsldev.herokuapp.com/token">/token</a>)</h3>
+</center>
+<ul>
+    <li>
+        /get - POST - gives client an access token and a refresh token if credentials are good
+        <br> in other way returns HTTP 400 BadRequest
+        <br>gets JSON object like this -
+        <br>{
+        <br>"email": "[email]",
+        <br>"password": "[password]"
+        <br>}
+    </li>
+    <li>
+        /refresh - POST - gives client a new access token and refresh token
+        <br>if refresh token haven`t expired yet AND !!! ACCESS TOKEN HAS ALREADY EXPIRED !!!
+        <br> if access token haven`t expired yet, new tokens won`t be given
+    </li>
+    <li>
+
+    </li>
+</ul>
+<center>
+<h3>Mappings for actions with posts (starts with <a href="https://fsldev.herokuapp.com/post">/post</a>)</h3>
+</center>
+<ul>
+    <li>
+        /{id} - GET - get information about post with id {id}
+    </li>
+    <li>
+        /all - GET - get information about all posts
+    </li>
+    <li>
+        /add - POST - add a new post (client must have admin role)
+        <br> gets JSON object like this -
+        <br>{
+        <br>"title": "[title]",
+        <br>"text": "[text]",
+        <br>"photoLink": "[link to photo]"
+        <br>}
+        <br>returns HTTP 200 OK if all was good or HTTP 400 BadRequest if smth went wrong
+    </li>
+</ul>
+
+<center>
+    <h3>Mappings for actions with annos (starts with <a href="https://fsldev.herokuapp.com/anno">/anno</a>)</h3>
+</center>
+<ul>
+    <li>
+        /all - GET - get information about all annos
+    </li>
+    <li>
+        /add - POST - add a new anno (client must be authorized)
+        <br> gets JSON object like this -
+        <br>{
+        <br>"title": "[title]",
+        <br>"text": "[text]"
+        <br>}
+        <br>returns HTTP 200 OK if all was good or HTTP 400 BadRequest if smth went wrong
+    </li>
+</ul>
+
+</body>
+</html>
